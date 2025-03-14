@@ -1,0 +1,146 @@
+# One CLI to format the code tree - https://github.com/numtide/treefmt
+
+# Do not exit with error if a configured formatter is missing
+# Env $TREEFMT_ALLOW_MISSING_FORMATTER
+allow-missing-formatter = true
+
+# Exclude files or directories matching the specified globs
+# Env $TREEFMT_EXCLUDES
+excludes = [
+  "*.lock",
+  "*.gif",
+  "*.otf",
+  "*.ttf",
+  "*.woff",
+  "*.woff2",
+  ".gitignore",
+  ".gitmodules",
+  "justfile",
+  "*.el",
+]
+
+# Log paths that did not match any formatters at the specified log level
+# Possible values are <debug|info|warn|error|fatal>
+# Env $TREEFMT_ON_UNMATCHED
+on-unmatched = "warn"
+
+# File to search for to find the tree root (if tree-root is not set)
+# Env $TREEFMT_TREE_ROOT_FILE
+tree-root-file = "flake.nix"
+
+# The method used to traverse the files within the tree root
+# Currently, we support 'auto', 'git' or 'filesystem'
+# Env $TREEFMT_WALK
+# walk = "filesystem"
+
+[formatter.biome]
+command = "biome"
+excludes = []
+includes = [
+  "*.js",
+  "*.ts",
+  "*.mjs",
+  "*.mts",
+  "*.cjs",
+  "*.cts",
+  "*.jsx",
+  "*.tsx",
+  "*.d.ts",
+  "*.d.cts",
+  "*.d.mts",
+  "*.json",
+  "*.jsonc",
+]
+options = ["format", "--write", "--no-errors-on-unmatched"]
+
+[formatter.clang-format]
+command = "clang-format"
+excludes = []
+includes = [
+  "*.c",
+  "*.cc",
+  "*.cpp",
+  "*.h",
+  "*.hh",
+  "*.hpp",
+  "*.glsl",
+  "*.vert",
+  ".tesc",
+  ".tese",
+  ".geom",
+  ".frag",
+  ".comp",
+]
+options = ["-i"]
+
+[formatter.hclfmt]
+command = "hclfmt"
+excludes = []
+includes = ["*.hcl"]
+options = ["-w"]
+
+[formatter.nixpkgs-fmt]
+command = "nixpkgs-fmt"
+excludes = []
+includes = ["*.nix"]
+options = []
+
+[formatter.prettier-markdown]
+command = "prettier"
+excludes = []
+includes = ["*.md"]
+options = ["--write"]
+
+[formatter.prettier-yaml]
+command = "prettier"
+excludes = []
+includes = ["*.yaml", "*.yml"]
+options = ["--write"]
+
+[formatter.taplo]
+command = "taplo"
+excludes = []
+includes = ["*.toml"]
+options = ["format"]
+
+[formatter.rubocop]
+command = "rubocop"
+excludes = []
+includes = ["*.rb"]
+options = []
+
+[formatter.ruff-check]
+command = "ruff"
+excludes = []
+includes = ["*.py", "*.pyi"]
+options = ["check", "--fix"]
+
+[formatter.ruff-format]
+command = "ruff"
+excludes = []
+includes = ["*.py", "*.pyi"]
+options = ["format"]
+
+[formatter.shellcheck]
+command = "shellcheck"
+excludes = []
+includes = ["*.sh", "*.bash", "*.envrc", "*.envrc.*"]
+options = []
+
+[formatter.shfmt]
+command = "shfmt"
+excludes = []
+includes = ["*.sh", "*.bash", "*.envrc", "*.envrc.*"]
+options = ["-s", "-w", "-i", "2"]
+
+[formatter.terraform]
+command = "terraform"
+excludes = []
+includes = ["*.tf", "*.tfvars", "*.tftest.hcl"]
+options = ["fmt"]
+
+[formatter.zig]
+command = "zig"
+excludes = []
+includes = ["*.zig", "*.zon"]
+options = ["fmt"]
